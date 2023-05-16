@@ -12,10 +12,6 @@ resource "aws_s3_bucket" "cache_bucket" {
   force_destroy = true
   tags          = module.this.tags
 
-  #versioning {
-  #  enabled = var.versioning_enabled
-  #}
-
   dynamic "logging" {
     for_each = var.access_log_bucket_name != "" ? [1] : []
     content {
@@ -23,18 +19,6 @@ resource "aws_s3_bucket" "cache_bucket" {
       target_prefix = "logs/${module.this.id}/"
     }
   }
-
-  #lifecycle_rule {
-  #  id      = "codebuildcache"
-  #  enabled = true
-
-  #  prefix = "/"
-  #  tags   = module.this.tags
-
-  #  expiration {
-  #    days = var.cache_expiration_days
-  #  }
-  #}
 
   dynamic "server_side_encryption_configuration" {
     for_each = var.encryption_enabled ? ["true"] : []
