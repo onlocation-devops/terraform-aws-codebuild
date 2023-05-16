@@ -424,6 +424,7 @@ resource "aws_codebuild_project" "default" {
         fetch_submodules = var.fetch_submodules
       }
     }
+  }
 
   dynamic "secondary_sources" {
     for_each = var.secondary_sources
