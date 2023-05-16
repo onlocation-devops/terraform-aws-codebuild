@@ -420,9 +420,7 @@ resource "aws_codebuild_project" "default" {
     #}
 
     git_submodules_config {
-      content {
         fetch_submodules = var.fetch_submodules
-      }
     }
   }
 
