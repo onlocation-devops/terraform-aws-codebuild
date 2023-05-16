@@ -12,9 +12,9 @@ resource "aws_s3_bucket" "cache_bucket" {
   force_destroy = true
   tags          = module.this.tags
 
-  versioning {
-    enabled = var.versioning_enabled
-  }
+  #versioning {
+  #  enabled = var.versioning_enabled
+  #}
 
   dynamic "logging" {
     for_each = var.access_log_bucket_name != "" ? [1] : []
@@ -46,6 +46,12 @@ resource "aws_s3_bucket" "cache_bucket" {
         }
       }
     }
+  }
+}
+resource "aws_s3_bucket_versioning" "cache_bucket" {
+  bucket = aws_s3_bucket.cache_bucket.id
+  versioning_configuration {
+    status = "Enabled"
   }
 }
 
