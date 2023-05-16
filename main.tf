@@ -419,13 +419,11 @@ resource "aws_codebuild_project" "default" {
     #  }
     #}
 
-    dynamic "git_submodules_config" {
-      for_each = var.fetch_git_submodules ? [""] : []
+    git_submodules_config {
       content {
-        fetch_submodules = true
+        fetch_submodules = var.fetch_submodules
       }
     }
-  }
 
   dynamic "secondary_sources" {
     for_each = var.secondary_sources
