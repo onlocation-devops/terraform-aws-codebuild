@@ -24,17 +24,17 @@ resource "aws_s3_bucket" "cache_bucket" {
     }
   }
 
-  lifecycle_rule {
-    id      = "codebuildcache"
-    enabled = true
+  #lifecycle_rule {
+  #  id      = "codebuildcache"
+  #  enabled = true
 
-    prefix = "/"
-    tags   = module.this.tags
+  #  prefix = "/"
+  #  tags   = module.this.tags
 
-    expiration {
-      days = var.cache_expiration_days
-    }
-  }
+  #  expiration {
+  #    days = var.cache_expiration_days
+  #  }
+  #}
 
   dynamic "server_side_encryption_configuration" {
     for_each = var.encryption_enabled ? ["true"] : []
@@ -49,9 +49,24 @@ resource "aws_s3_bucket" "cache_bucket" {
   }
 }
 resource "aws_s3_bucket_versioning" "cache_bucket" {
-  bucket = aws_s3_bucket.cache_bucket.*.id
+  bucket = aws_s3_bucket.cache_bucket.id
   versioning_configuration {
     status = "Enabled"
+  }
+}
+resource "aws_s3_bucket_lifecycle_configuration" "example" {
+  bucket = aws_s3_bucket.cache_bucket.id
+
+  rule {
+    id      = "codebuildcache"
+    status  = "Enabled"
+
+    prefix = "/"
+    tags   = module.this.tags
+
+    expiration {
+      days = var.cache_expiration_days
+    }
   }
 }
 
