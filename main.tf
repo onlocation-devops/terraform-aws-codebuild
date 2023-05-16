@@ -54,7 +54,7 @@ resource "aws_s3_bucket_versioning" "cache_bucket" {
     status = "Enabled"
   }
 }
-resource "aws_s3_bucket_lifecycle_configuration" "example" {
+resource "aws_s3_bucket_lifecycle_configuration" "cache_bucket" {
   bucket = aws_s3_bucket.cache_bucket.id
 
   rule {
@@ -62,7 +62,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "example" {
     status  = "Enabled"
 
     prefix = "/"
-    tags   = module.this.tags
 
     expiration {
       days = var.cache_expiration_days
