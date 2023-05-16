@@ -61,7 +61,9 @@ resource "aws_s3_bucket_lifecycle_configuration" "cache_bucket" {
     id      = "codebuildcache"
     status  = "Enabled"
 
-    prefix = "/"
+    filter {
+      prefix = "/"
+    }
 
     expiration {
       days = var.cache_expiration_days
