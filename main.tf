@@ -356,31 +356,31 @@ resource "aws_codebuild_project" "default" {
     type                        = var.build_type
     privileged_mode             = var.privileged_mode
 
-    environment_variable {
-      name  = "AWS_REGION"
-      value = signum(length(var.aws_region)) == 1 ? var.aws_region : data.aws_region.default.name
-    }
+#     environment_variable {
+#       name  = "AWS_REGION"
+#       value = signum(length(var.aws_region)) == 1 ? var.aws_region : data.aws_region.default.name
+#     }
 
-    environment_variable {
-      name  = "AWS_ACCOUNT_ID"
-      value = signum(length(var.aws_account_id)) == 1 ? var.aws_account_id : data.aws_caller_identity.default.account_id
-    }
+#     environment_variable {
+#       name  = "AWS_ACCOUNT_ID"
+#       value = signum(length(var.aws_account_id)) == 1 ? var.aws_account_id : data.aws_caller_identity.default.account_id
+#     }
 
-    dynamic "environment_variable" {
-      for_each = signum(length(var.image_repo_name)) == 1 ? [""] : []
-      content {
-        name  = "IMAGE_REPO_NAME"
-        value = var.image_repo_name
-      }
-    }
+#     dynamic "environment_variable" {
+#       for_each = signum(length(var.image_repo_name)) == 1 ? [""] : []
+#       content {
+#         name  = "IMAGE_REPO_NAME"
+#         value = var.image_repo_name
+#       }
+#     }
 
-    dynamic "environment_variable" {
-      for_each = signum(length(var.image_tag)) == 1 ? [""] : []
-      content {
-        name  = "IMAGE_TAG"
-        value = var.image_tag
-      }
-    }
+#     dynamic "environment_variable" {
+#       for_each = signum(length(var.image_tag)) == 1 ? [""] : []
+#       content {
+#         name  = "IMAGE_TAG"
+#         value = var.image_tag
+#       }
+#     }
 
     dynamic "environment_variable" {
       for_each = signum(length(module.this.stage)) == 1 ? [""] : []
@@ -390,14 +390,14 @@ resource "aws_codebuild_project" "default" {
       }
     }
 
-    dynamic "environment_variable" {
-      for_each = signum(length(var.github_token)) == 1 ? [""] : []
-      content {
-        name  = "GITHUB_TOKEN"
-        value = var.github_token
-        type  = var.github_token_type
-      }
-    }
+#     dynamic "environment_variable" {
+#       for_each = signum(length(var.github_token)) == 1 ? [""] : []
+#       content {
+#         name  = "GITHUB_TOKEN"
+#         value = var.github_token
+#         type  = var.github_token_type
+#       }
+#     }
 
     dynamic "environment_variable" {
       for_each = var.environment_variables
