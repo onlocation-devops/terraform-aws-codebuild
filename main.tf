@@ -425,9 +425,9 @@ resource "aws_codebuild_project" "default" {
     #  }
     #}
 
-    git_submodules_config {
-        fetch_submodules = var.fetch_git_submodules
-    }
+#     git_submodules_config {
+#         fetch_submodules = var.fetch_git_submodules
+#     }
   }
 
   dynamic "secondary_sources" {
